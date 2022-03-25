@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      /* Reseting defaault browser styling */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 3s;
+      }
+/* To centre the main container in the page */
+      .main-cont {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .ruler-container {
+        position: relative;
+
+        width: 8rem;
+        height: 8rem;
+      }
+      .ruler {
+        position: absolute;
+        /* background-color: black; */
+
+        height: 2rem;
+        width: 2rem;
+        border-radius: 25px;
+      }
+      button {
+        cursor: pointer;
+        display: block;
+        margin-top: 1rem;
+        color: white;
+        background-color: green;
+      }
+      .stop-btn{
+        background-color: red;
+      }
+      .btns{
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .horizontal-anim {
+        animation: top-bottom 1.5s ease-in-out infinite alternate;
+      }
+      .vertical-anim {
+        animation: right-left 1.5s ease-in-out infinite alternate;
+      }
+      .top {
+        top: 0;
+        left: 0;
+        z-index: 4;
+      }
+      .bottom {
+        bottom: 0;
+        right: 0;
+        z-index: 2;
+      }
+      .right {
+        right: 0;
+        top: 0;
+        z-index: 3;
+      }
+      .left {
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+      }
+
+      @keyframes top-bottom {
+        from {
+          width: 2rem;
+        }
+        to {
+          width: 8rem;
+        }
+      }
+      @keyframes right-left {
+        from {
+          height: 2rem;
+        }
+        to {
+          height: 8rem;
+        }
+      }
+    </style>
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main-cont">
+      <div class="ruler-container">
+        <div class="ruler top"></div>
+        <div class="ruler right"></div>
+        <div class="ruler bottom"></div>
+        <div class="ruler left"></div>
+      </div>
+      <div class="btns">
+        <button class="start-btn">start</button>
+        <button class="stop-btn">stop</button>
+      </div>
+    </div>
+
+    <script>
+      const startBtn = document.querySelector(".start-btn");
+      const stopBtn = document.querySelector(".stop-btn");
+      const topEl = document.querySelector(".top");
+      const bottom = document.querySelector(".bottom");
+      const right = document.querySelector(".right");
+      const left = document.querySelector(".left");
+
+// Global variables
+      const color = ["green", "lightskyblue", "orange", "yellow"];
+      let color1 = 0,
+        color2 = 1,
+        color3 = 2,
+        color4 = 3;
+        // Initializing background color
+      topEl.style.backgroundColor = color[color1];
+      bottom.style.backgroundColor = color[color2];
+      right.style.backgroundColor = color[color3];
+      left.style.backgroundColor = color[color4];
+
+// Animation start
+      const startAnimation = () => {
+        topEl.classList.add("horizontal-anim");
+        bottom.classList.add("horizontal-anim");
+        right.classList.add("vertical-anim");
+        left.classList.add("vertical-anim");
+      };
+
+// Animation Stop
+      const stopAnimation = () => {
+        topEl.classList.remove("horizontal-anim");
+        bottom.classList.remove("horizontal-anim");
+        right.classList.remove("vertical-anim");
+        left.classList.remove("vertical-anim");
+      };
+
+      // Listening to button clicks
+      startBtn.addEventListener("click", startAnimation);
+      stopBtn.addEventListener("click", stopAnimation);
+
+// Change the color in each iteration of the animation.
+      topEl.addEventListener("animationiteration", () => {
+        topEl.style.backgroundColor = color[color1 % color.length];
+        bottom.style.backgroundColor = color[color2 % color.length];
+        right.style.backgroundColor = color[color3 % color.length];
+        left.style.backgroundColor = color[color4 % color.length];
+        color1++;
+        color2++;
+        color3++;
+        color4++;
+      });
+    </script>
+  </body>
+</html>
